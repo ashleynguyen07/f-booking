@@ -36,10 +36,10 @@ Admin ---> UC_RoomAdmin
 Admin ---> UC_DepartmentsAdmin
 
 rectangle Controller{
-  usecase "/student/\n(GET,POST)" as Rest_Admin
-  usecase "/admin/info/{id}\n(GET,PATCH,DELETE)" as Rest_Admin
+ ' usecase "/student/\n(GET,POST)" as Rest_Admin
+ 'usecase "/admin/room/{id}\n(GET,PATCH,DELETE)" as Rest_Admin
   usecase "/admin/room\n(GET,POST,DELETE)" as Rest_RoomAdmin
-  usecase "/admin/room/{id}\n(GET,POST,DELETE)" as Rest_RoomAdmin
+  usecase "/admin/room/{id}\n(GET,POST,DELETE)" as Rest_Admin
   usecase "/admin/booking_time\n(GET,POST,DELETE)" as Rest_BookingTimeAdmin
   usecase "/admin/booking_time/{id}\n(GET,POST,DELETE)" as Rest_BookingTimeAdmin
   usecase "/departments\n(GET,POST,PATCH,DELETE)" as Rest_DepartmentAdmin
@@ -47,20 +47,20 @@ rectangle Controller{
   usecase "/departments/{id}\n(GET)" as Rest_DepartmentAdmin
 }
 UC_LoginAdmin -> Rest_LoginAdmin
-UC_RoomAdmin ---> Rest_Admin
+UC_RoomAdmin ---> Rest_RoomAdmin
 UC_DepartmentsAdmin ---> Rest_DepartmentAdmin
 
 database MSSQL
 Controller <---> MSSQL : transaction via Model
 
 
-package StudentApp {
+package UserApp {
   usecase "Đăng nhập" as UC_LoginStudent
   usecase "Tra cứu phòng trống" as UC_RoomStudent
   usecase "Booking phòng" as UC_BookingStudent
   usecase "Xác nhận booking phòng" as UC_CheckBookingStudent
 }
-actor "Học sinh" as Student
+actor "Người dùng" as Student
 'actor "Admin" as Admin
 UC_LoginStudent <--- Student
 UC_RoomStudent <--- Student
@@ -69,9 +69,8 @@ UC_CheckBookingStudent <--- Student
 
 
 Rest_LoginAdmin <--- UC_LoginStudent
-Rest_RoomAdmin <--- UC_BookingStudent
+Rest_Admin <--- UC_BookingStudent
 Rest_BookingTimeAdmin <--- UC_CheckBookingStudent
 Rest_BookingTimeAdmin <--- UC_RoomStudent
-
 
 @enduml
