@@ -1,0 +1,71 @@
+@startuml
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "Department" as deparment {
+  *department_id : int <<PK>>
+  --
+  *full_name : nvarchar 
+}
+
+entity "StaffInfo" as staffInfo {
+  *staff_id : int <<PK>>
+  --
+  *full_name : nvarchar 
+  birthdate: date 
+  sex: char
+  department_id: int <<FK>
+}
+
+entity "Login" as login {
+  *staff_id : int <<FK>>
+  --
+  *user_name : char
+  password: char
+}
+
+entity "Covid" as covid {
+  *staff_id : int <<FK>>
+  --
+  *start_date : date
+  end_date: date
+}
+
+entity "Attendance" as attendance {
+  *staff_id : int <<FK>>
+  --
+  *start_hour : datetime  
+  end_hour: datetime
+  work_place: nvarchar
+}
+
+entity "Salary" as salary {
+  *staff_id : int <<FK>>
+  --
+  *work_hour : int
+  salary: double
+  basic_salary: double
+}
+
+entity "System" as system {
+  *staff_id : int <<FK>>
+  --
+  *date_off : date
+  reason: char
+  annual_leave: int
+}
+
+staffInfo ||--|{ deparment
+staffInfo ||--|| login
+staffInfo ||--|{ covid
+staffInfo ||--|| salary
+staffInfo ||--|{ attendance
+
+
+
+
+@enduml
